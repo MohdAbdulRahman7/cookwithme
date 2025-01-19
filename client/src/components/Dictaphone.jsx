@@ -27,7 +27,7 @@ const Dictaphone = () => {
             resetTranscript();
             sendPrompt(copy).then(response => {
                 console.log('Response from backend:', response);
-                textToSpeech(response.message);
+                textToSpeech(response.response);
             }).catch(error => {
                 console.error('Error sending prompt:', error);
             });

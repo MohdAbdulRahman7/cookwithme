@@ -3,12 +3,14 @@ import json
 import openai
 from openai import OpenAI
 import os
-
+from flask_cors import CORS
 from config import GPT_API_KEY
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = os.urandom(24)  # This generates a random 24-byte string
 openai.api_key = GPT_API_KEY
+
 
 # Default Router
 @app.route("/")
@@ -23,7 +25,7 @@ def load_prompt():
 smart_prompt = load_prompt()
 
 # POST API -- Text - Image
-@app.route("/chat", methods=["POST"])
+@app.route("/api/prompt", methods=["POST"])
 def chat():
     data = request.json
     user_input = data.get("prompt")
