@@ -18,8 +18,11 @@ import {
 
 import gifImage from '../assets/teddy.png'; // Import your video
 
+import SideWindow from './SideWindow';
+
 
 function RecipeForm() {
+    
     const {
         transcript,
         listening,
@@ -32,6 +35,8 @@ function RecipeForm() {
         return <span>Browser doesn't support speech recognition.</span>;
     }
 
+    const [res, setRes] = useState({});
+
     useEffect(() => {
         if(transcript.toLowerCase().includes('next')) {
             console.log(transcript);
@@ -39,6 +44,7 @@ function RecipeForm() {
             getNext().then(response => {
                 console.log('Response from backend:', response);
                 textToSpeech(response.response);
+                setRes(response.response);
             }).catch(error => {
                 console.error('Error getting next:', error);
             });
@@ -50,6 +56,7 @@ function RecipeForm() {
             sendPrompt(copy).then(response => {
                 console.log('Response from backend:', response);
                 textToSpeech(response.response);
+                setRes(response.response);
             }).catch(error => {
                 console.error('Error sending prompt:', error);
             });
@@ -77,48 +84,44 @@ function RecipeForm() {
     setSnackbarOpen(true);
   };
 
-  return (
+return (
     <Box sx={{ display: 'flex', height: '100vh', backgroundColor: '#ffffff' }}>
-      {/* Content Area */}
-      <Box sx={{ flex: 1, p: 4 }}>
-        <Paper elevation={3} sx={{ maxWidth: 800, width: '100%', mx: 'auto', p: 4, borderRadius: 4 }}>
-          {/* <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}> */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
-            {/* <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 600, color: '#2e7d32' }}>
-              Your Personalized Recipe
-            </Typography> */}
-            <img 
-        src={gifImage}  // Path to your GIF
-        alt="Descriptive Text"
-        style={{ width: '50%'}}  // Optional styling
-        onClick={() => {
-            SpeechRecognition.startListening({ continuous: true });
-            textToSpeech("Microphone is on");
-        }}
-      />
-            {/* <RestaurantMenuIcon sx={{ fontSize: 60, color: '#4caf50' }} /> */}
-        <TextField
-          fullWidth
-          placeholder="Search..."
-          variant="outlined"
-          value={transcript}
-          sx={{ backgroundColor: '#ffffff', borderRadius: 1 }}
-        />
-        <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
-          Need ideas for meals?
-        </Button>
-          </Box>
-          <Snackbar
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            open={snackbarOpen}
-            autoHideDuration={6000}
-            onClose={() => setSnackbarOpen(false)}
-            message="Recipe submitted successfully!"
-          />
-        </Paper>
-      </Box>
+        {/* Content Area */}
+        <Box sx={{ flex: 1, p: 4 }}>
+            <Paper elevation={3} sx={{ maxWidth: 800, width: '100%', mx: 'auto', p: 4, borderRadius: 4 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
+                    <img 
+                        src={gifImage}  // Path to your GIF
+                        alt="Descriptive Text"
+                        style={{ width: '50%'}}  // Optional styling
+                        onClick={() => {
+                                SpeechRecognition.startListening({ continuous: true });
+                                textToSpeech("Microphone is on");
+                        }}
+                    />
+                    <TextField
+                        fullWidth
+                        placeholder="Search..."
+                        variant="outlined"
+                        value={transcript}
+                        sx={{ backgroundColor: '#ffffff', borderRadius: 1 }}
+                    />
+                    <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
+                        Need ideas for meals?
+                    </Button>
+                </Box>
+                <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                    open={snackbarOpen}
+                    autoHideDuration={6000}
+                    onClose={() => setSnackbarOpen(false)}
+                    message="Recipe submitted successfully!"
+                />
+            </Paper>
+        </Box>
+        {res.length > 0 && <SideWindow props={res} />}
     </Box>
-  );
+);
 }
 
 export default RecipeForm;
