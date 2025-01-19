@@ -119,8 +119,8 @@ function App() {
           )}
           </div>
           <Routes>
-            <Route path="/recipe-form" element={<div className="recipe-form"><RecipeForm /></div>} />
-            <Route path="*" element={<Navigate to="/recipe-form" replace />} />
+            <Route path="/index.html" element={<div className="recipe-form"><RecipeForm /></div>} />
+            <Route path="*" element={<Navigate to="/index.html" replace />} />
           </Routes>
         </div>
         </TourProvider>
