@@ -97,6 +97,7 @@ class Server:
         
     
     def handle_response(self, response):
+        response.replace("'", "\"")
         response_json = json.loads(response)
         response_type = response_json["response_type"]
         print("response type:", response_type)
