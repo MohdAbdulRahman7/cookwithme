@@ -21,8 +21,6 @@ def load_prompt():
 
 smart_prompt = load_prompt()
 
-print(smart_prompt)
-
 # POST API -- Text - Image
 @app.route("/chat", methods=["POST"])
 def chat():
