@@ -146,6 +146,7 @@ return (
           />
         </Paper>
       </Box>
+      {res.length > 0 && <SideWindow props={res} />}
     </Box>
 );
 }
