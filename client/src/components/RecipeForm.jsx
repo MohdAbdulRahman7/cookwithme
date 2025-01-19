@@ -40,6 +40,20 @@ function RecipeForm() {
 
     const [img, setImg] = useState("");
 
+    const queryIdeas = (meal) => {
+        let query = "Give me ideas for " + meal;
+        sendPrompt(query).then(response => {
+            console.log('Response from backend:', response);
+            textToSpeech(response.response);
+            setRes(response.response);
+            setList([response.response]);
+        }
+        ).catch(error => {
+            console.error('Error sending prompt:', error);
+        }
+        );
+    };
+
     useEffect(() => {
         if(transcript.toLowerCase().includes('next')) {
             console.log(transcript);
@@ -98,6 +112,8 @@ function RecipeForm() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [isVibrating, setIsVibrating] = useState(false); // State to control vibration class
 
+  const [pressed, setPressed] = useState(false);
+
   const [isListening, setIsListening] = useState(false);
   const startListening = () => {
     SpeechRecognition.startListening({ continuous: true });
@@ -115,43 +131,6 @@ function RecipeForm() {
   }, [listening]);
 
 return (
-//     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
-//     <Paper elevation={3} sx={{ maxWidth: 800, width: '100%', mx: 'auto', p: 4, borderRadius: 4 }}>
-//         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
-//             <img
-//                 src={gifImage}
-//                 alt="Descriptive Text"
-//                 style={{ width: '50%' }}
-//                 className={isListening ? 'vibrate' : ''}
-//                 onClick={() => {
-//                     if (listening) {
-//                         stopListening();
-//                     } else {
-//                         startListening();
-//                     }
-//                 }}
-//             />
-//             <TextField
-//                 fullWidth
-//                 placeholder="What can I help you cook?"
-//                 variant="outlined"
-//                 value={transcript}
-//                 sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
-//             />
-//             <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
-//                 Need ideas for meals?
-//             </Button>
-//         </Box>
-//         {/* <Snackbar
-//             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-//             open={res.length > 0}
-//             autoHideDuration={6000}
-//             onClose={() => setRes('')}
-//             message="Recipe submitted successfully!"
-//         /> */}
-//     </Paper>
-//     {list.length > 0 && <SideWindow list={list} setRes={setRes} />}
-// </Box>
 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
             <Grid2 container spacing={3} sx={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 {/* Recipe Form Section */}
@@ -178,16 +157,25 @@ return (
                                 value={transcript}
                                 sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
                             />
-                            <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
+                            {!pressed && <Button onClick={() => setPressed(true)} variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
                                 Need ideas for meals?
-                            </Button>
+                            </Button>}
+                            {pressed && <Button onClick={() => queryIdeas("Breakfast")} variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
+                                Breakfast
+                            </Button>}
+                            {pressed && <Button onClick={() => queryIdeas("Lunch")} variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
+                                Lunch
+                            </Button>}
+                            {pressed && <Button onClick={() => queryIdeas("Dinner")} variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
+                                Dinner
+                            </Button>}
                         </Box>
                     </Paper>
                 </Grid2>
 
                 {/* Side Window Section */}
                 <Grid2 item xs={12} md={6}>
-                    {list.length > 0 && <SideWindow list={list} setRes={setRes} />}
+                    {list.length > 0 && <SideWindow list={list} setRes={setRes} img={img} setList={setList} />}
                 </Grid2>
             </Grid2>
 </Box>
