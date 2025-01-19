@@ -69,7 +69,7 @@ function OpenTourButton() {
         cursor: 'pointer',
       }}
     >
-      How do I use tedAI!
+      How To Use tedAI!
     </button>
   );
 }
