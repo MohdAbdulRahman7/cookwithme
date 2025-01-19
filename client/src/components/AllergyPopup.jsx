@@ -18,6 +18,7 @@ import {
   Radio,
 } from '@mui/material';
 import WarningIcon from '@mui/icons-material/Warning';
+import { updateDietaryNeeds } from '../helpers/apiUtils';
 
 const allergens = ['Peanuts', 'Tree Nuts', 'Milk', 'Eggs', 'Fish', 'Shellfish', 'Soy', 'Wheat', 'Veg', 'Non Veg', 'Organic', 'Non Organic'];
 
@@ -45,12 +46,21 @@ function AllergyPopup({ onClose }) {
   };
 
   const handleSaveAllergens = () => {
-    console.log('Selected allergens:', selectedAllergens);
-    console.log('Selected allergens:', isVeg);
-    console.log('Selected allergens:', isOrganic);
-    // Here you would typically save this to your backend or local storage
+    let updatedDietaryNeeds = {};
+    selectedAllergens.forEach((allergen, index) => {
+        updatedDietaryNeeds[`allergen_${index + 1}`] = allergen;
+    });
+    if (isVeg !== null) {
+        updatedDietaryNeeds["veg"] = isVeg ? "Veg" : "Non-Veg";
+    }
+    if (isOrganic !== null) {
+        updatedDietaryNeeds["organic"] = isOrganic ? "Organic" : "Non-Organic";
+    }
+    updateDietaryNeeds(updatedDietaryNeeds);
+    // console.log('Dietary needs after update:', updatedDietaryNeeds);
     onClose();
-  };
+};
+
 
   const handleVegChange = (event) => {
     setIsVeg(event.target.value === 'veg');
@@ -87,10 +97,10 @@ function AllergyPopup({ onClose }) {
         {!showAllergens ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
             <Button onClick={handleYes} variant="contained" color="primary" size="large">
-              Yes, I do
+              Yes
             </Button>
             <Button onClick={handleNo} variant="outlined" color="primary" size="large">
-              No, I don't
+              No
             </Button>
           </Box>
         ) : (

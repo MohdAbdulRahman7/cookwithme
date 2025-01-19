@@ -10,7 +10,7 @@ import {
   IconButton,
   InputAdornment
 } from '@mui/material';
-
+import '../App.css';
 import gifImage from '../assets/teddy.png'; // Import your video
 
 
@@ -23,16 +23,25 @@ function RecipeForm() {
     instructions: '',
   });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [isVibrating, setIsVibrating] = useState(false); // State to control vibration class
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setRecipe(prev => ({ ...prev, [name]: value }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setRecipe(prev => ({ ...prev, [name]: value }));
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Recipe submitted:', recipe);
-    setSnackbarOpen(true);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log('Recipe submitted:', recipe);
+  //   setSnackbarOpen(true);
+  // };
+
+  const handleImageClick = () => {
+    console.log("Vibrates");
+    setIsVibrating(true); // Start vibrating
+    setTimeout(() => {
+      setIsVibrating(false); // Stop vibrating after 0.5 seconds
+    }, 500);
   };
 
   return (
@@ -46,10 +55,12 @@ function RecipeForm() {
               Your Personalized Recipe
             </Typography> */}
             <img 
-        src={gifImage}  // Path to your GIF
-        alt="Descriptive Text"
-        style={{ width: '50%'}}  // Optional styling
-      />
+              src={gifImage}
+              alt="Descriptive Text"
+              style={{ width: '50%'}}
+              className={isVibrating ? 'vibrate' : ''}
+              onClick={handleImageClick}
+            />
             {/* <RestaurantMenuIcon sx={{ fontSize: 60, color: '#4caf50' }} /> */}
         <TextField
           fullWidth
