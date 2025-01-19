@@ -176,6 +176,7 @@ return (
                             <TextField
                                 fullWidth
                                 placeholder="What can I help you cook?"
+                                className='helpGuide'
                                 variant="outlined"
                                 value={manual}
                                 onChange={(e) => setManual(e.target.value)} 

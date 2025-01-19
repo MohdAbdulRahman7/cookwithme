@@ -8,6 +8,10 @@ export const steps = [
       content: 'Press me for a hands-free experience!',
     },
     {
+        selector: '.helpGuide', 
+        content: 'Say:\n\nSEND to Submit output, NEXT for options, STOP to Mute',
+    },      
+    {
       selector: '.recipe-form',
       content: 'This is the pass to present your desires and get tailored recipes.',
     },
