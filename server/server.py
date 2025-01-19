@@ -115,7 +115,7 @@ class Server:
             return jsonify({"response": "Invalid response type"}), 400
 
     def handle_alternative(self, data):
-        value = data.get("alternative") if data.get("alternative") else "No Alternatives"
+        value = list(data.values())[0]
         self.last_seen_ingredient = value if value != "No Alternatives" else self.last_seen_ingredient
         return jsonify({"response": value}), 200
     
