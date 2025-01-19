@@ -135,7 +135,7 @@ return (
             <Grid2 container spacing={3} sx={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 {/* Recipe Form Section */}
                 <Grid2 item xs={12} md={6}>
-                    <Paper elevation={3} sx={{ p: 4, borderRadius: 4 }}>
+                    <Paper elevation={3} sx={{ p: 4, borderRadius: 4, height: '100%' }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
                             <img
                                 src={gifImage}
@@ -174,8 +174,8 @@ return (
                 </Grid2>
 
                 {/* Side Window Section */}
-                <Grid2 item xs={12} md={6}>
-                    {list.length > 0 && <SideWindow list={list} setRes={setRes} img={img} setList={setList} />}
+                <Grid2 item xs={12} md={3}>
+                    {list.length > 0 && <SideWindow list={list} setRes={setRes}  img={img} setList={setList} />}
                 </Grid2>
             </Grid2>
 </Box>
