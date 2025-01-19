@@ -99,10 +99,8 @@ class Server:
     
     def handle_response(self, response):
         response.replace("'", "\"")
-        def wrap_numbered_list(text):
-            return re.sub(r'(\d+\.\s)', r'"\1', text)
+        response = response.strip('```json').strip('```')
 
-        response = wrap_numbered_list(response)
         response_json = json.loads(response)
         response_type = response_json["response_type"]
         print("response type:", response_type)
@@ -123,7 +121,7 @@ class Server:
             return jsonify({"response": "Invalid response type"}), 400
 
     def handle_general(self, data):
-        value = data.get("general", "I'm not sure what you mean by that.")
+        value = data.get("data", "I'm not sure what you mean by that.")
         return jsonify({"response": value}), 200
 
     def handle_alternative(self, data):

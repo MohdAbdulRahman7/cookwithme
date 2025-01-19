@@ -66,9 +66,9 @@ function RecipeForm() {
                 textToSpeech(response.response);
                 setRes(response.response);
                 if (response.flag === "alternate"){
-                    let tempList = list;
+                    let tempList = [...list];
                     tempList.pop();
-                    setList([tempList, response.response]);
+                    setList([...tempList, response.response]);
                 }
                 else{
                     setList([response.response]);
