@@ -33,6 +33,7 @@ class Server:
 
     def next_prompt(self):
         val = self.general_list.pop(0) if len(self.general_list) > 0 else "Unable to get next"
+        self.last_seen_ingredient = val
         print("Returning value: ", val)
         return jsonify({"response": val}), 200
 
@@ -40,7 +41,6 @@ class Server:
         data = request.json
         print(data)
         user_input = data.get("prompt")
-        input_type = data.get("type")
 
         if not user_input:
             return jsonify({"error": "Prompt is required"}), 400
@@ -61,6 +61,9 @@ class Server:
                 messages=session["messages"]
             )
             response_message = completion.choices[0].message.content
+            print(response_message)
+            # response_message = json.loads(response_message)
+            # print(response_message)
 
             # response_message = choose_specific_response(input_type)
             # print(response_message)
@@ -69,6 +72,7 @@ class Server:
 
             return self.handle_response(response_message)
         except Exception as e:
+            print(e)
             return jsonify({"error": str(e)}), 500
 
     def generate_image(self):
@@ -93,11 +97,11 @@ class Server:
         
     
     def handle_response(self, response):
-        print(response)
-        response_type = response["response_type"]
-        print(response_type)
-        data = response["data"]
-        print(data)
+        response_json = json.loads(response)
+        response_type = response_json["response_type"]
+        print("response type:", response_type)
+        data = response_json["data"]
+        print("response data:", data)
         if response_type == "alternative":
             return self.handle_alternative(data)
         elif response_type == "ideas":
@@ -111,7 +115,7 @@ class Server:
             return jsonify({"response": "Invalid response type"}), 400
 
     def handle_alternative(self, data):
-        value = list(data.values())[0] if len(data) > 0 else "No Alternatives"
+        value = data.get("alternative") if data.get("alternative") else "No Alternatives"
         self.last_seen_ingredient = value if value != "No Alternatives" else self.last_seen_ingredient
         return jsonify({"response": value}), 200
     
@@ -130,7 +134,7 @@ class Server:
         prep_time = data.get("Preparation time")
         ingredients = data.get("Ingredients")
         for key, value in ingredients.items():
-            self.general_list.append(value)
+            self.general_list.append(key + ": " + value)
 
         self.last_seen_ingredient = self.general_list.pop(0) if len(self.general_list) > 0 else "No Ingredients"
         return jsonify({"response": prep_time + ", First Ingredient: " + self.last_seen_ingredient}), 200
