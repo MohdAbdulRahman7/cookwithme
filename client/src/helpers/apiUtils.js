@@ -10,3 +10,13 @@ export const sendPrompt = async (prompt, type) => {
         console.error(error);
     }
 }
+
+export const getNext = async () => {
+    console.log("Next Clicked")
+    try {
+        const response = await axios.get('http://localhost:5000/api/next');
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
