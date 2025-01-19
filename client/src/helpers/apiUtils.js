@@ -1,7 +1,7 @@
 import axios from 'axios';
 let dietary_needs = {"1": "no nuts", "2":"vegan"};
 
-export const sendPrompt = async (prompt, type) => {
+export const sendPrompt = async (prompt) => {
     try {
         const preferences = `These are my dietary needs: ${JSON.stringify(dietary_needs)}`;
         const response = await axios.post('http://localhost:5000/api/prompt', { prompt: prompt + ' ' + preferences });
