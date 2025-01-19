@@ -50,7 +50,7 @@ const theme = createTheme({
 function OpenTourButton() {
   const { setIsOpen } = useTour();
   useEffect(() => {
-    setIsOpen(false); // Open the tour when the component mounts
+    setIsOpen(true); // Open the tour when the component mounts
   }, [setIsOpen]);
   return (
     <button
