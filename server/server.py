@@ -32,7 +32,7 @@ class Server:
         return render_template("index.html")
 
     def next_prompt(self):
-        val = self.general_list.pop(0) if len(self.general_list) > 0 else "Unable to get next"
+        val = self.general_list.pop(0) if len(self.general_list) > 0 else "Looks like you got all the ingredients! Shall we start cookin?"
         self.last_seen_ingredient = val
         print("Returning value: ", val)
         return jsonify({"response": val}), 200

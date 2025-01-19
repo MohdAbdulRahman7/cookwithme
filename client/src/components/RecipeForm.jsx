@@ -78,13 +78,22 @@ function RecipeForm() {
   //   setSnackbarOpen(true);
   // };
 
-  const handleImageClick = () => {
-    console.log("Vibrates");
-    setIsVibrating(true); // Start vibrating
-    setTimeout(() => {
-      setIsVibrating(false); // Stop vibrating after 0.5 seconds
-    }, 500);
+
+  const [isListening, setIsListening] = useState(false);
+  const startListening = () => {
+    SpeechRecognition.startListening({ continuous: true });
+    textToSpeech("Microphone is on");
   };
+
+  const stopListening = () => {
+    SpeechRecognition.stopListening();
+    textToSpeech("Microphone is off");
+  };
+
+  // Sync the local state with the SpeechRecognition listening state
+  useEffect(() => {
+    setIsListening(listening); // Update the vibration state based on `listening`
+  }, [listening]);
 
   return (
     <Box sx={{ display: 'flex', height: '100vh', backgroundColor: '#ffffff' }}>
@@ -96,13 +105,17 @@ function RecipeForm() {
             {/* <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 600, color: '#2e7d32' }}>
               Your Personalized Recipe
             </Typography> */}
-            <img 
-        src={gifImage}  // Path to your GIF
+            <img
+        src={gifImage} // Path to your GIF
         alt="Descriptive Text"
-        style={{ width: '50%'}}  // Optional styling
+        style={{ width: '50%' }} // Optional styling
+        className={isListening ? 'vibrate' : ''} // Add 'vibrate' class if listening
         onClick={() => {
-            SpeechRecognition.startListening({ continuous: true });
-            textToSpeech("Microphone is on");
+          if (listening) {
+            stopListening(); // Stop listening and stop vibration
+          } else {
+            startListening(); // Start listening and start vibration
+          }
         }}
       />
             {/* <RestaurantMenuIcon sx={{ fontSize: 60, color: '#4caf50' }} /> */}
