@@ -36,6 +36,7 @@ function RecipeForm() {
     }
 
     const [res, setRes] = useState("");
+    const [list, setList] = useState([]);
 
     useEffect(() => {
         if(transcript.toLowerCase().includes('next')) {
@@ -45,6 +46,7 @@ function RecipeForm() {
                 console.log('Response from backend:', response);
                 textToSpeech(response.response);
                 setRes(response.response);
+                setList([...list, response.response]);
             }).catch(error => {
                 console.error('Error getting next:', error);
             });
@@ -63,6 +65,7 @@ function RecipeForm() {
                 console.log('Response from backend:', response);
                 textToSpeech(response.response);
                 setRes(response.response);
+                setList([response.response]);
             }).catch(error => {
                 console.error('Error sending prompt:', error);
             });
@@ -152,7 +155,7 @@ return (
           />
         </Paper>
       </Box>
-      {res.length > 0 && <SideWindow props={res} setRes={setRes} />}
+      {list.length > 0 && <SideWindow list={list} setRes={setRes} />}
     </Box>
 );
 }
