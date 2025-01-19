@@ -10,7 +10,7 @@ import {
   Box, 
   Typography, 
   Paper, 
-  Grid, 
+  Grid2, 
   Snackbar, 
   IconButton,
   InputAdornment
@@ -107,87 +107,81 @@ function RecipeForm() {
   }, [listening]);
 
 return (
-    // <Box sx={{ display: 'flex', height: '100vh', backgroundColor: '#ffffff' }}>
-    //   {/* Content Area */}
-    //   <Box sx={{ flex: 1, p: 4 }}>
-    //     <Paper elevation={3} sx={{ maxWidth: 800, width: '100%', mx: 'auto', p: 4, borderRadius: 4 }}>
-    //       {/* <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}> */}
-    //       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
-    //         {/* <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 600, color: '#2e7d32' }}>
-    //           Your Personalized Recipe
-    //         </Typography> */}
-    //         <img
-    //     src={gifImage} // Path to your GIF
-    //     alt="Descriptive Text"
-    //     style={{ width: '50%' }} // Optional styling
-    //     className={isListening ? 'vibrate' : ''} // Add 'vibrate' class if listening
-    //     onClick={() => {
-    //       if (listening) {
-    //         stopListening(); // Stop listening and stop vibration
-    //       } else {
-    //         startListening(); // Start listening and start vibration
-    //       }
-    //     }}
-    //   />
-    //         {/* <RestaurantMenuIcon sx={{ fontSize: 60, color: '#4caf50' }} /> */}
-    //     <TextField
-    //       fullWidth
-    //       placeholder="What can I help you cook?"
-    //       variant="outlined"
-    //       value={transcript}
-    //       sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
-    //     />
-    //     <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
-    //       Need ideas for meals?
-    //     </Button>
-    //       </Box>
-    //       <Snackbar
-    //         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-    //         open={snackbarOpen}
-    //         autoHideDuration={6000}
-    //         onClose={() => setSnackbarOpen(false)}
-    //         message="Recipe submitted successfully!"
-    //       />
-    //     </Paper>
-    //   </Box>
-    //   {res.length > 0 && <SideWindow props={res} setRes={setRes} />}
-    // </Box>
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
-    <Paper elevation={3} sx={{ maxWidth: 800, width: '100%', mx: 'auto', p: 4, borderRadius: 4 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
-            <img
-                src={gifImage}
-                alt="Descriptive Text"
-                style={{ width: '50%' }}
-                className={isListening ? 'vibrate' : ''}
-                onClick={() => {
-                    if (listening) {
-                        stopListening();
-                    } else {
-                        startListening();
-                    }
-                }}
-            />
-            <TextField
-                fullWidth
-                placeholder="What can I help you cook?"
-                variant="outlined"
-                value={transcript}
-                sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
-            />
-            <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
-                Need ideas for meals?
-            </Button>
-        </Box>
-        {/* <Snackbar
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            open={res.length > 0}
-            autoHideDuration={6000}
-            onClose={() => setRes('')}
-            message="Recipe submitted successfully!"
-        /> */}
-    </Paper>
-    {list.length > 0 && <SideWindow list={list} setRes={setRes} />}
+//     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+//     <Paper elevation={3} sx={{ maxWidth: 800, width: '100%', mx: 'auto', p: 4, borderRadius: 4 }}>
+//         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
+//             <img
+//                 src={gifImage}
+//                 alt="Descriptive Text"
+//                 style={{ width: '50%' }}
+//                 className={isListening ? 'vibrate' : ''}
+//                 onClick={() => {
+//                     if (listening) {
+//                         stopListening();
+//                     } else {
+//                         startListening();
+//                     }
+//                 }}
+//             />
+//             <TextField
+//                 fullWidth
+//                 placeholder="What can I help you cook?"
+//                 variant="outlined"
+//                 value={transcript}
+//                 sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
+//             />
+//             <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
+//                 Need ideas for meals?
+//             </Button>
+//         </Box>
+//         {/* <Snackbar
+//             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+//             open={res.length > 0}
+//             autoHideDuration={6000}
+//             onClose={() => setRes('')}
+//             message="Recipe submitted successfully!"
+//         /> */}
+//     </Paper>
+//     {list.length > 0 && <SideWindow list={list} setRes={setRes} />}
+// </Box>
+<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+            <Grid2 container spacing={3} sx={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                {/* Recipe Form Section */}
+                <Grid2 item xs={12} md={6}>
+                    <Paper elevation={3} sx={{ p: 4, borderRadius: 4 }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
+                            <img
+                                src={gifImage}
+                                alt="Descriptive Text"
+                                style={{ width: '50%' }}
+                                className={isListening ? 'vibrate' : ''}
+                                onClick={() => {
+                                    if (listening) {
+                                        stopListening();
+                                    } else {
+                                        startListening();
+                                    }
+                                }}
+                            />
+                            <TextField
+                                fullWidth
+                                placeholder="What can I help you cook?"
+                                variant="outlined"
+                                value={transcript}
+                                sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
+                            />
+                            <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
+                                Need ideas for meals?
+                            </Button>
+                        </Box>
+                    </Paper>
+                </Grid2>
+
+                {/* Side Window Section */}
+                <Grid2 item xs={12} md={6}>
+                    {list.length > 0 && <SideWindow list={list} setRes={setRes} />}
+                </Grid2>
+            </Grid2>
 </Box>
 );
 }
