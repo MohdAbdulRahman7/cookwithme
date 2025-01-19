@@ -115,8 +115,7 @@ class Server:
             return jsonify({"response": "Invalid response type"}), 400
 
     def handle_alternative(self, data):
-        value = list(data.values())[0]
-        self.last_seen_ingredient = value if value != "No Alternatives" else self.last_seen_ingredient
+        value = data.get("alternative", list(data.values())[0])
         return jsonify({"response": value}), 200
     
     def handle_ideas(self, data):
