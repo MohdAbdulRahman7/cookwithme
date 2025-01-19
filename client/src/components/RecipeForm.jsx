@@ -35,7 +35,7 @@ function RecipeForm() {
         return <span>Browser doesn't support speech recognition.</span>;
     }
 
-    const [res, setRes] = useState({});
+    const [res, setRes] = useState("");
 
     useEffect(() => {
         if(transcript.toLowerCase().includes('next')) {
