@@ -29,6 +29,9 @@
 import React from 'react';
 import { getNext } from '../helpers/apiUtils';
 import { textToSpeech } from '../helpers/textToSpeech';
+import { FaArrowRight } from 'react-icons/fa'; 
+import '../App.css'; 
+
 const SideWindow = ({ setRes, list, img }) => { 
 
 
@@ -42,7 +45,7 @@ const SideWindow = ({ setRes, list, img }) => {
                 {list.map((item, index) => (
                     <li key={index} className="side-window-item">{item}</li>
                 ))}
-            </ul>
+            </ul>}
             <button
                 onClick={() => getNext().then(response => {
                     console.log('Response from backend:', response);
