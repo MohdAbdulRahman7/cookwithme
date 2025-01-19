@@ -50,14 +50,13 @@ const theme = createTheme({
 function OpenTourButton() {
   const { setIsOpen } = useTour();
   useEffect(() => {
-    setIsOpen(true); // Open the tour when the component mounts
+    setIsOpen(false); // Open the tour when the component mounts
   }, [setIsOpen]);
   return (
     <button
       onClick={() => setIsOpen(true)}
       style={{
-        // position: 'absolute',
-        display: "inline-block",
+        display: "block",
         top: '10px',
         right: '10px',
         marginTop: '10px',
@@ -85,31 +84,30 @@ function App() {
       <TourProvider
         steps={steps} // Provide steps here
         badgeContent={({ totalSteps, currentStep }) => `${currentStep + 1} / ${totalSteps}`}
-      >
-      
+          >
+          
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <Logo className="logo" />
         <div style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'flex-end',  // Align buttons to the right
-            // position: 'relative',
-            gap: "2rem"
+            alignItems: 'flex-end',
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            zIndex: "2"
           }}>
         <OpenTourButton />
         <button
             onClick={toggleAllergyPopup}
             style={{
-              display: "inline-block",
+              display: "block",
               padding: '10px 20px',
               backgroundColor: '#ff6b6b',
               color: '#fff',
               border: 'none',
               borderRadius: '5px',
               cursor: 'pointer',
-              // marginTop: '20px',
-              position: 'absolute',   // Absolute positioning
-              // right: '20px',
             }}
           >
             Edit Dietary Restrictions
