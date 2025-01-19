@@ -47,15 +47,63 @@ const Dictaphone = () => {
     return (
         <div>
             <p>Microphone: {listening ? 'on' : 'off'}</p>
-            <button onClick={() => SpeechRecognition.startListening({ continuous: true })}>Start</button>
-            <button onClick={SpeechRecognition.stopListening}>Stop</button>
-            <button onClick={() => sendPrompt("Test message")}>Send</button>
-            <button onClick={() => getNext().then(response => {
-                console.log('Response from backend:', response);
-                textToSpeech(response.response);
-            }).catch(error => {
-                console.error('Error getting next:', error);
-            })}>Next</button>
+            <button onClick={() => {
+                SpeechRecognition.startListening({ continuous: true });
+                textToSpeech("Microphone is on");
+            }}>Start</button>
+            <button onClick={() => {
+                SpeechRecognition.stopListening();
+                textToSpeech("Microphone is off");
+            }}>Stop</button>
+            <button onClick={() => {
+                sendPrompt("Test message").then(response => {
+                    console.log('Response from backend:', response);
+                    textToSpeech(response.response);
+                }).catch(error => {
+                    console.error('Error sending prompt:', error);
+                });
+            }}>Send</button>
+            <button onClick={() => {
+                getNext().then(response => {
+                    console.log('Response from backend:', response);
+                    textToSpeech(response.response);
+                }).catch(error => {
+                    console.error('Error getting next:', error);
+                });
+            }}>Next</button>
+
+            <button onClick={() => {
+                sendPrompt("Test message", "alternative").then(response => {
+                    console.log('Response from backend:', response);
+                    textToSpeech(response.response);
+                }).catch(error => {
+                    console.error('Error sending prompt:', error);
+                });
+            }}>Send2</button>
+            <button onClick={() => {
+                sendPrompt("Test message", "ideas").then(response => {
+                    console.log('Response from backend:', response);
+                    textToSpeech(response.response);
+                }).catch(error => {
+                    console.error('Error sending prompt:', error);
+                });
+            }}>Send3</button>
+            <button onClick={() => {
+                sendPrompt("Test message", "ingredients").then(response => {
+                    console.log('Response from backend:', response);
+                    textToSpeech(response.response);
+                }).catch(error => {
+                    console.error('Error sending prompt:', error);
+                });
+            }}>Send4</button>
+            <button onClick={() => {
+                sendPrompt("Test message", "steps").then(response => {
+                    console.log('Response from backend:', response);
+                    textToSpeech(response.response);
+                }).catch(error => {
+                    console.error('Error sending prompt:', error);
+                });
+            }}>Send5</button>
             <p>{transcript}</p>
         </div>
     );

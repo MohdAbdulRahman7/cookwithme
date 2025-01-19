@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-export const sendPrompt = async (prompt) => {
+export const sendPrompt = async (prompt, type) => {
     try {
-        const response = await axios.post('http://localhost:5000/api/prompt', { prompt });
+        const response = await axios.post('http://localhost:5000/api/prompt', { prompt, type });
+        console.log(response.data.response);
         return response.data;
     } catch (error) {
         console.error(error);
