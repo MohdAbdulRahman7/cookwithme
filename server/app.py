@@ -28,6 +28,46 @@ def load_prompt():
     return prompts["recipe_prompt"]
 
 smart_prompt = load_prompt()
+last_seen_ingredient = ""
+
+# POST API -- Text - Image
+# @app.route("/api/prompt", methods=["POST"])
+# def chat():
+#     data = request.json
+#     user_input = data.get("prompt")
+
+#     if not user_input:
+#         return jsonify({"error": "Prompt is required"}), 400
+
+#     # stores the conversation history
+#     if "messages" not in session:
+#         session["messages"] = [
+#             {"role": "system", "content": smart_prompt},
+#             {"role": "system", "content": last_seen_ingredient}
+#         ]
+
+#     # Add users message to convo
+#     session["messages"].append({"role": "user", "content": user_input})
+
+#     # Check if the prompt is asking for an image
+#     image_keywords = ["image", "picture", "illustration", "photo", "visual", "how it looks", "describe an image", "create an image"]
+#     if any(keyword in user_input.lower() for keyword in image_keywords):
+#         return generate_image(user_input)
+
+#     try:
+#         completion = openai.chat.completions.create(
+#             model="gpt-4o-mini",
+#             messages=session["messages"]
+#         )
+#         response_message = completion.choices[0].message.content
+
+#         # Add GPT's response to the convo
+#         session["messages"].append({"role": "assistant", "content": response_message})
+
+#         return jsonify({"response": response_message}), 200
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+
 
 # GET API -- Text
 @app.route("/api/next", methods=["GET"])
@@ -53,8 +93,51 @@ def chat():
             {"role": "system", "content": last_seen_ingredient}
         ]
 
-    # Add users message to convo
+    # Add the user's message to the conversation
+    # Add the user's message to the conversation
     session["messages"].append({"role": "user", "content": user_input})
+
+    # Check if the prompt is asking for an image (contains image-related keywords)
+    image_keywords = [
+    "image", "picture", "illustration", "photo", "visual", 
+    "drawing", "sketch", "graphic", "artwork", "design", 
+    "rendering", "scene", "snapshot", "composition", "depiction",
+    "look", "create", "draw", "depict", "illustrate", "paint", "design", "capture", "generate", "build"
+    ]
+    if any(keyword in user_input.lower() for keyword in image_keywords):
+        try:
+            # Generate image using the prompt
+            response = openai.images.generate(
+                prompt=user_input,
+                n=1,  # Generate 1 image
+                size="512x512"
+            )
+            # Return the URL of the generated image
+            image_url = response.data[0].url
+            return jsonify({"image_url": image_url}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+    # Check if the prompt is asking for an image (contains image-related keywords)
+    image_keywords = [
+    "image", "picture", "illustration", "photo", "visual", 
+    "drawing", "sketch", "graphic", "artwork", "design", 
+    "rendering", "scene", "snapshot", "composition", "depiction",
+    "look", "create", "draw", "depict", "illustrate", "paint", "design", "capture", "generate", "build"
+    ]
+    if any(keyword in user_input.lower() for keyword in image_keywords):
+        try:
+            # Generate image using the prompt
+            response = openai.images.generate(
+                prompt=user_input,
+                n=1,  # Generate 1 image
+                size="512x512"
+            )
+            # Return the URL of the generated image
+            image_url = response.data[0].url
+            return jsonify({"image_url": image_url}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     try:
         completion = openai.chat.completions.create(
@@ -63,7 +146,7 @@ def chat():
         )
         response_message = completion.choices[0].message.content
 
-        # Add GPT's response to the convo
+        # Add GPT's response to the conversation
         session["messages"].append({"role": "assistant", "content": response_message})
 
         return jsonify({"response": response_message}), 200
@@ -84,7 +167,7 @@ def generate_image():
         # Generate image using the prompt
         response = openai.images.generate(
             prompt=prompt,
-            n=1,  # Generate 1 image
+            n=1, 
             size="512x512"
         )
         # Return the URL of the generated image
