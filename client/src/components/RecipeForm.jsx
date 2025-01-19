@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import 'regenerator-runtime/runtime';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
+import { sendPrompt, getNext } from '../helpers/apiUtils';
+import { textToSpeech } from '../helpers/textToSpeech';
 import { 
   Button, 
   TextField, 
@@ -15,6 +20,43 @@ import gifImage from '../assets/teddy.png'; // Import your video
 
 
 function RecipeForm() {
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+    } = useSpeechRecognition();
+
+    
+    if (!browserSupportsSpeechRecognition) {
+        return <span>Browser doesn't support speech recognition.</span>;
+    }
+
+    useEffect(() => {
+        if(transcript.toLowerCase().includes('next')) {
+            console.log(transcript);
+            resetTranscript();
+            getNext().then(response => {
+                console.log('Response from backend:', response);
+                textToSpeech(response.response);
+            }).catch(error => {
+                console.error('Error getting next:', error);
+            });
+        }
+        if (transcript.toLowerCase().includes('send')) {
+            console.log(transcript); // Logic for sending to backend.
+            let copy = transcript;
+            resetTranscript();
+            sendPrompt(copy).then(response => {
+                console.log('Response from backend:', response);
+                textToSpeech(response.response);
+            }).catch(error => {
+                console.error('Error sending prompt:', error);
+            });
+        }
+    }, [transcript]);
+
+
   const [recipe, setRecipe] = useState({
     name: '',
     prepTime: '',
@@ -49,12 +91,17 @@ function RecipeForm() {
         src={gifImage}  // Path to your GIF
         alt="Descriptive Text"
         style={{ width: '50%'}}  // Optional styling
+        onClick={() => {
+            SpeechRecognition.startListening({ continuous: true });
+            textToSpeech("Microphone is on");
+        }}
       />
             {/* <RestaurantMenuIcon sx={{ fontSize: 60, color: '#4caf50' }} /> */}
         <TextField
           fullWidth
           placeholder="Search..."
           variant="outlined"
+          value={transcript}
           sx={{ backgroundColor: '#ffffff', borderRadius: 1 }}
         />
         <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>

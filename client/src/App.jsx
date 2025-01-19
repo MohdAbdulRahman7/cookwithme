@@ -6,6 +6,7 @@ import RecipeForm from './components/RecipeForm';
 import AllergyPopup from './components/AllergyPopup';
 import gifImage from './assets/teddy.png'; // Import your video
 import { Box } from '@mui/material';
+import Dictaphone from './components/Dictaphone';
 
 const theme = createTheme({
   palette: {
