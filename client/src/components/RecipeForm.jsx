@@ -18,8 +18,11 @@ import {
 import '../App.css';
 import gifImage from '../assets/teddy.png'; // Import your video
 
+import SideWindow from './SideWindow';
+
 
 function RecipeForm() {
+    
     const {
         transcript,
         listening,
@@ -32,6 +35,8 @@ function RecipeForm() {
         return <span>Browser doesn't support speech recognition.</span>;
     }
 
+    const [res, setRes] = useState({});
+
     useEffect(() => {
         if(transcript.toLowerCase().includes('next')) {
             console.log(transcript);
@@ -39,6 +44,7 @@ function RecipeForm() {
             getNext().then(response => {
                 console.log('Response from backend:', response);
                 textToSpeech(response.response);
+                setRes(response.response);
             }).catch(error => {
                 console.error('Error getting next:', error);
             });
@@ -50,6 +56,7 @@ function RecipeForm() {
             sendPrompt(copy).then(response => {
                 console.log('Response from backend:', response);
                 textToSpeech(response.response);
+                setRes(response.response);
             }).catch(error => {
                 console.error('Error sending prompt:', error);
             });
@@ -95,7 +102,7 @@ function RecipeForm() {
     setIsListening(listening); // Update the vibration state based on `listening`
   }, [listening]);
 
-  return (
+return (
     <Box sx={{ display: 'flex', height: '100vh', backgroundColor: '#ffffff' }}>
       {/* Content Area */}
       <Box sx={{ flex: 1, p: 4 }}>
@@ -140,7 +147,7 @@ function RecipeForm() {
         </Paper>
       </Box>
     </Box>
-  );
+);
 }
 
 export default RecipeForm;
