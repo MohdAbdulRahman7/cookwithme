@@ -56,6 +56,28 @@ class Server:
         # Add users message to convo
         session["messages"].append({"role": "user", "content": user_input})
 
+        # Check if the prompt is asking for an image (contains image-related keywords)
+        image_keywords = [
+        "image", "picture", "illustration", "photo", "visual", 
+        "drawing", "sketch", "graphic", "artwork", "design", 
+        "rendering", "scene", "snapshot", "composition", "depiction",
+        "look", "create", "draw", "depict", "illustrate", "paint", "design", "capture", "generate", "build"
+        ]
+        if any(keyword in user_input.lower() for keyword in image_keywords):
+            try:
+                # Generate image using the prompt
+                response = openai.images.generate(
+                    prompt=user_input,
+                    n=1,  # Generate 1 image
+                    size="512x512"
+                )
+                # Return the URL of the generated image
+                image_url = response.data[0].url
+                return jsonify({"image_url": image_url}), 200
+            except Exception as e:
+                return jsonify({"error": str(e)}), 500
+
+    # Else go for textual information!
         try:
             completion = openai.chat.completions.create(
                 model="gpt-4o-mini",
@@ -121,7 +143,9 @@ class Server:
             return jsonify({"response": "Invalid response type"}), 400
 
     def handle_general(self, data):
-        value = data.get("data", "I'm not sure what you mean by that.")
+        value = data.get("data", list(data.values())[0])
+        if not value:
+            return jsonify({"response": "I'm not sure what you mean by that."}), 200
         return jsonify({"response": value}), 200
 
     def handle_alternative(self, data):

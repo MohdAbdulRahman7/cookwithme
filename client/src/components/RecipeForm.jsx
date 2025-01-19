@@ -179,13 +179,13 @@ return (
                 Need ideas for meals?
             </Button>
         </Box>
-        <Snackbar
+        {/* <Snackbar
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             open={res.length > 0}
             autoHideDuration={6000}
             onClose={() => setRes('')}
             message="Recipe submitted successfully!"
-        />
+        /> */}
     </Paper>
     {list.length > 0 && <SideWindow list={list} setRes={setRes} />}
 </Box>
