@@ -41,7 +41,23 @@ function RecipeForm() {
 
     const [img, setImg] = useState("");
 
+    const [manual, setManual] = useState("");
+
+    const [prevTranscript, setPrevTranscript] = useState("");
+
+    const updateTranscript = (newTranscript) => {
+        let tempTranscript = newTranscript.slice(prevTranscript.length);
+        setPrevTranscript(newTranscript);
+        setManual((prevManual) => prevManual + tempTranscript);
+    };
+
+    const handleReset = () => {
+        setManual("");
+        resetTranscript();
+    };
+
     const queryIdeas = (meal) => {
+        setPressed(false);
         let query = "Give me ideas for " + meal;
         sendPrompt(query).then(response => {
             console.log('Response from backend:', response);
@@ -56,9 +72,10 @@ function RecipeForm() {
     };
 
     useEffect(() => {
+        updateTranscript(transcript);
         if(transcript.toLowerCase().includes('next')) {
             console.log(transcript);
-            resetTranscript();
+            handleReset();
             getNext().then(response => {
                 console.log('Response from backend:', response);
                 textToSpeech(response.response);
@@ -71,13 +88,13 @@ function RecipeForm() {
         if(transcript.toLowerCase().includes('stop')) {
             console.log(transcript);
             SpeechRecognition.stopListening();
-            resetTranscript();
+            handleReset();
         }
 
         if (transcript.toLowerCase().includes('send')) {
             console.log(transcript); // Logic for sending to backend.
-            let copy = transcript;
-            resetTranscript();
+            let copy = manual;
+            handleReset();
             sendPrompt(copy).then(response => {
                 console.log('Response from backend:', response);
                 textToSpeech(response.response);
@@ -159,7 +176,8 @@ return (
                                 fullWidth
                                 placeholder="What can I help you cook?"
                                 variant="outlined"
-                                value={transcript}
+                                value={manual}
+                                onChange={(e) => setManual(e.target.value)} 
                                 sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
                             />
                             {!pressed && (
