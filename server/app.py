@@ -49,7 +49,8 @@ def chat():
     # stores the conversation history
     if "messages" not in session:
         session["messages"] = [
-            {"role": "system", "content": smart_prompt}
+            {"role": "system", "content": smart_prompt},
+            {"role": "system", "content": last_seen_ingredient}
         ]
 
     # Add users message to convo
