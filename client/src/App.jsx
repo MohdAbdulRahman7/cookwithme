@@ -6,7 +6,7 @@ import RecipeForm from './components/RecipeForm';
 import AllergyPopup from './components/AllergyPopup';
 import gifImage from './assets/teddy.png'; // Import your video
 import { Box } from '@mui/material';
-import Dictaphone from './components/Dictaphone';
+import Logo from './components/Logo'
 
 const theme = createTheme({
   palette: {
@@ -16,9 +16,6 @@ const theme = createTheme({
     secondary: {
       main: '#4ecdc4', // A fresh teal
     },
-    // background: {
-    //   default: '#f7f7f7',
-    // },
   },
   typography: {
     fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
@@ -56,10 +53,10 @@ function App() {
       <CssBaseline />
       
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <Logo />
           {showAllergyPopup && <AllergyPopup onClose={() => setShowAllergyPopup(false)} />}
-          {/* Add Video here */}
-          <Box sx={{ textAlign: 'center' }}>
-    </Box>
+          {/* <Box sx={{ textAlign: 'center' }}>
+    </Box> */}
           <Routes>
             <Route path="/recipe-form" element={<RecipeForm />} />
             <Route path="*" element={<Navigate to="/recipe-form" replace />} />

@@ -80,18 +80,6 @@ function RecipeForm() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [isVibrating, setIsVibrating] = useState(false); // State to control vibration class
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setRecipe(prev => ({ ...prev, [name]: value }));
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log('Recipe submitted:', recipe);
-  //   setSnackbarOpen(true);
-  // };
-
-
   const [isListening, setIsListening] = useState(false);
   const startListening = () => {
     SpeechRecognition.startListening({ continuous: true });
@@ -109,51 +97,88 @@ function RecipeForm() {
   }, [listening]);
 
 return (
-    <Box sx={{ display: 'flex', height: '100vh', backgroundColor: '#ffffff' }}>
-      {/* Content Area */}
-      <Box sx={{ flex: 1, p: 4 }}>
-        <Paper elevation={3} sx={{ maxWidth: 800, width: '100%', mx: 'auto', p: 4, borderRadius: 4 }}>
-          {/* <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}> */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
-            {/* <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 600, color: '#2e7d32' }}>
-              Your Personalized Recipe
-            </Typography> */}
+    // <Box sx={{ display: 'flex', height: '100vh', backgroundColor: '#ffffff' }}>
+    //   {/* Content Area */}
+    //   <Box sx={{ flex: 1, p: 4 }}>
+    //     <Paper elevation={3} sx={{ maxWidth: 800, width: '100%', mx: 'auto', p: 4, borderRadius: 4 }}>
+    //       {/* <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}> */}
+    //       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
+    //         {/* <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 600, color: '#2e7d32' }}>
+    //           Your Personalized Recipe
+    //         </Typography> */}
+    //         <img
+    //     src={gifImage} // Path to your GIF
+    //     alt="Descriptive Text"
+    //     style={{ width: '50%' }} // Optional styling
+    //     className={isListening ? 'vibrate' : ''} // Add 'vibrate' class if listening
+    //     onClick={() => {
+    //       if (listening) {
+    //         stopListening(); // Stop listening and stop vibration
+    //       } else {
+    //         startListening(); // Start listening and start vibration
+    //       }
+    //     }}
+    //   />
+    //         {/* <RestaurantMenuIcon sx={{ fontSize: 60, color: '#4caf50' }} /> */}
+    //     <TextField
+    //       fullWidth
+    //       placeholder="What can I help you cook?"
+    //       variant="outlined"
+    //       value={transcript}
+    //       sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
+    //     />
+    //     <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
+    //       Need ideas for meals?
+    //     </Button>
+    //       </Box>
+    //       <Snackbar
+    //         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+    //         open={snackbarOpen}
+    //         autoHideDuration={6000}
+    //         onClose={() => setSnackbarOpen(false)}
+    //         message="Recipe submitted successfully!"
+    //       />
+    //     </Paper>
+    //   </Box>
+    //   {res.length > 0 && <SideWindow props={res} setRes={setRes} />}
+    // </Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+    <Paper elevation={3} sx={{ maxWidth: 800, width: '100%', mx: 'auto', p: 4, borderRadius: 4 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
             <img
-        src={gifImage} // Path to your GIF
-        alt="Descriptive Text"
-        style={{ width: '50%' }} // Optional styling
-        className={isListening ? 'vibrate' : ''} // Add 'vibrate' class if listening
-        onClick={() => {
-          if (listening) {
-            stopListening(); // Stop listening and stop vibration
-          } else {
-            startListening(); // Start listening and start vibration
-          }
-        }}
-      />
-            {/* <RestaurantMenuIcon sx={{ fontSize: 60, color: '#4caf50' }} /> */}
-        <TextField
-          fullWidth
-          placeholder="Search..."
-          variant="outlined"
-          value={transcript}
-          sx={{ backgroundColor: '#ffffff', borderRadius: 1 }}
-        />
-        <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
-          Need ideas for meals?
-        </Button>
-          </Box>
-          <Snackbar
+                src={gifImage}
+                alt="Descriptive Text"
+                style={{ width: '50%' }}
+                className={isListening ? 'vibrate' : ''}
+                onClick={() => {
+                    if (listening) {
+                        stopListening();
+                    } else {
+                        startListening();
+                    }
+                }}
+            />
+            <TextField
+                fullWidth
+                placeholder="What can I help you cook?"
+                variant="outlined"
+                value={transcript}
+                sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
+            />
+            <Button variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
+                Need ideas for meals?
+            </Button>
+        </Box>
+        <Snackbar
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            open={snackbarOpen}
+            open={res.length > 0}
             autoHideDuration={6000}
-            onClose={() => setSnackbarOpen(false)}
+            onClose={() => setRes('')}
             message="Recipe submitted successfully!"
-          />
-        </Paper>
-      </Box>
-      {res.length > 0 && <SideWindow props={res} setRes={setRes} />}
-    </Box>
+        />
+    </Paper>
+    {res.length > 0 && <SideWindow props={res} setRes={setRes} />}
+</Box>
 );
 }
 
