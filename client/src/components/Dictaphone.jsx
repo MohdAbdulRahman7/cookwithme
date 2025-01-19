@@ -47,15 +47,10 @@ const Dictaphone = () => {
     return (
         <div>
             <p>Microphone: {listening ? 'on' : 'off'}</p>
-            <button onClick={() => SpeechRecognition.startListening({ continuous: true })}>Start</button>
-            <button onClick={SpeechRecognition.stopListening}>Stop</button>
-            <button onClick={() => sendPrompt("Test message")}>Send</button>
-            <button onClick={() => getNext().then(response => {
-                console.log('Response from backend:', response);
-                textToSpeech(response.response);
-            }).catch(error => {
-                console.error('Error getting next:', error);
-            })}>Next</button>
+            <button onClick={() => {
+                SpeechRecognition.startListening({ continuous: true });
+                textToSpeech("Microphone is on");
+            }}>Start</button>
             <p>{transcript}</p>
         </div>
     );

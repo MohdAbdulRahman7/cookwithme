@@ -1,0 +1,16 @@
+{
+    "response_type": "ingredients",
+    "data": {
+      "Preparation time": "15-20 minutes",
+      "Ingredients": {
+        "1": "Pizza Dough: 1 batch (store-bought or homemade)",
+        "2": "Tomato Sauce: 1/2 cup",
+        "3": "Mozzarella Cheese: 200g (fresh, sliced)",
+        "4": "Fresh Basil Leaves: A handful",
+        "5": "Olive Oil: 1 tablespoon",
+        "6": "Salt: To taste",
+        "7": "Black Pepper: To taste"
+      }
+    }
+  }
+  
