@@ -37,7 +37,7 @@
   }
 }
 
-.App-button {
+/* .App-button {
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
@@ -49,7 +49,7 @@
 
 .App-button:hover {
   background-color: #45a049;
-}
+} */
 
 /* Modal styles */
 .modal {
@@ -78,7 +78,7 @@
   margin: 20px 0;
 }
 
-.App-button {
+/* .App-button {
   background-color: #4CAF50;
   color: Blue;
   padding: 10px 20px;
@@ -89,7 +89,7 @@
 
 .App-button:hover {
   background-color: #45a049;
-}
+} */
 
 h3 {
   margin-top: 10px;
@@ -116,7 +116,8 @@ label {
 
 /* Box styling */
 .side-window-container {
-  width: 70%;
+  width: 90%;
+  min-width: 250px;
   padding: 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -126,6 +127,11 @@ label {
   overflow-y: auto; /* Add vertical scroll */
   max-height: 500px; /* You can adjust this value based on the available height */
   margin: 0 auto;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end; /* Align everything to the right */
 }
 
 /* Header */
@@ -133,16 +139,58 @@ label {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
 }
 
 /* List styling */
 .side-window-list {
   margin-bottom: 16px;
+  padding: 0;
+  list-style-type: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align list items to the right */
+  gap: 8px; /* Space between items */
 }
 
+.side-window-image {
+  width: 90%;
+  align-items: center;
+  height: auto;
+  max-width: 300px;
+  margin-left: auto;
+  display: block;
+  /* margin-bottom: 16px; */
+}
+
+/* Individual list item styling (chat message bubble) */
 .side-window-item {
-  margin-bottom: 8px;
-  color: #4a4a4a;
+  background-color: #ECFFDC; /* Light cyan background for chat bubbles */
+  color: #333;
+  padding: 12px 20px;
+  border-radius: 25px;
+  max-width: 80%; /* Limit width of the bubbles */
+  align-self: flex-end; 
+  word-wrap: break-word; /* Break long words */
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative; 
+}
+
+/* Pointy end (tail) for the speech bubble */
+.side-window-item::after {
+  content: '';
+  position: absolute;
+  bottom: -10px; 
+  right: 10px; 
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #e0f7fa; 
 }
 
 /* Button Styling */
@@ -152,13 +200,14 @@ label {
   justify-content: center;
   width: 48px;
   height: 48px;
-  background-color: #3b82f6;
+  background-color: #50C878;
   color: white;
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 10px;
 }
 
 .next-button:hover {

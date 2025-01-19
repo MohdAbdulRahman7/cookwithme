@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-
+import { TourProvider, useTour } from '@reactour/tour';
+import { steps } from '../components/steps';
 import { sendPrompt, getNext } from '../helpers/apiUtils';
 import { textToSpeech } from '../helpers/textToSpeech';
 import { 
@@ -132,6 +133,10 @@ function RecipeForm() {
 
 return (
 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+  <TourProvider
+          steps={steps} // Provide steps here
+          badgeContent={({ totalSteps, currentStep }) => `${currentStep + 1} / ${totalSteps}`}
+        >
             <Grid2 container spacing={3} sx={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 {/* Recipe Form Section */}
                 <Grid2 item xs={12} md={6}>
@@ -141,7 +146,7 @@ return (
                                 src={gifImage}
                                 alt="Descriptive Text"
                                 style={{ width: '50%' }}
-                                className={isListening ? 'vibrate' : ''}
+                                className={`${isListening ? 'vibrate' : ''} tedAI`}
                                 onClick={() => {
                                     if (listening) {
                                         stopListening();
@@ -157,29 +162,97 @@ return (
                                 value={transcript}
                                 sx={{ backgroundColor: '#ffffff', borderRadius: 10 }}
                             />
-                            {!pressed && <Button onClick={() => setPressed(true)} variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
-                                Need ideas for meals?
-                            </Button>}
-                            {pressed && <Button onClick={() => queryIdeas("Breakfast")} variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
-                                Breakfast
-                            </Button>}
-                            {pressed && <Button onClick={() => queryIdeas("Lunch")} variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
-                                Lunch
-                            </Button>}
-                            {pressed && <Button onClick={() => queryIdeas("Dinner")} variant="contained" color="success" fullWidth sx={{ mb: 1 }}>
-                                Dinner
-                            </Button>}
-                        </Box>
-                    </Paper>
-                </Grid2>
+                            {!pressed && (
+                            <Button
+                              onClick={() => setPressed(true)}
+                              variant="contained"
+                              color="success"
+                              fullWidth
+                              sx={{
+                                mb: 1,
+                                borderRadius: 20, // Rounded corners
+                                fontWeight: 'bold', // Bold text for emphasis
+                                '&:hover': {
+                                  backgroundColor: '#388e3c', // Darker green on hover
+                                },
+                                transition: 'background-color 0.3s ease', // Smooth hover transition
+                              }}
+                            >
+                              Need ideas for meals?
+                            </Button>
+                          )}
 
-                {/* Side Window Section */}
-                <Grid2 item xs={12} md={3}>
-                    {list.length > 0 && <SideWindow list={list} setRes={setRes}  img={img} setList={setList} />}
-                </Grid2>
-            </Grid2>
-</Box>
-);
-}
+                          {pressed && (
+                            <>
+                              <Button
+                                onClick={() => queryIdeas("Breakfast")}
+                                variant="contained"
+                                color="success"
+                                fullWidth
+                                sx={{
+                                  mb: 1,
+                                  borderRadius: 20,
+                                  fontWeight: 'bold',
+                                  minWidth: 'auto',
+                                  '&:hover': {
+                                    backgroundColor: '#388e3c',
+                                  },
+                                  transition: 'background-color 0.3s ease',
+                                }}
+                              >
+                                Breakfast
+                              </Button>
+
+                              <Button
+                                onClick={() => queryIdeas("Lunch")}
+                                variant="contained"
+                                color="success"
+                                fullWidth
+                                sx={{
+                                  mb: 1,
+                                  borderRadius: 20,
+                                  fontWeight: 'bold',
+                                  '&:hover': {
+                                    backgroundColor: '#388e3c',
+                                  },
+                                  transition: 'background-color 0.3s ease',
+                                }}
+                              >
+                                Lunch
+                              </Button>
+
+                              <Button
+                                onClick={() => queryIdeas("Dinner")}
+                                variant="contained"
+                                color="success"
+                                fullWidth
+                                sx={{
+                                  mb: 1,
+                                  borderRadius: 20,
+                                  fontWeight: 'bold',
+                                  '&:hover': {
+                                    backgroundColor: '#388e3c',
+                                  },
+                                  transition: 'background-color 0.3s ease',
+                                }}
+                              >
+                                Dinner
+                              </Button>
+                            </>
+                          )}
+
+                                </Box>
+                            </Paper>
+                        </Grid2>
+
+                                          {/* Side Window Section */}
+                                          <Grid2 item xs={12} md={6}>
+                                              {list.length > 0 && <SideWindow list={list} setRes={setRes} img={img} setList={setList} />}
+                                          </Grid2>
+                                      </Grid2>
+                                      </TourProvider>
+                          </Box>
+                          );
+                          }
 
 export default RecipeForm;

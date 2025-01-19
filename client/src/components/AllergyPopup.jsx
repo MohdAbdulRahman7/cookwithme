@@ -20,7 +20,7 @@ import {
 import WarningIcon from '@mui/icons-material/Warning';
 import { updateDietaryNeeds } from '../helpers/apiUtils';
 
-const allergens = ['Peanuts', 'Tree Nuts', 'Milk', 'Eggs', 'Fish', 'Shellfish', 'Soy', 'Wheat', 'Veg', 'Non Veg', 'Organic', 'Non Organic'];
+const allergens = ['Peanuts', 'Tree Nuts', 'Milk', 'Eggs', 'Soy', 'Veg', 'Non Veg', 'Halal', 'Organic', 'Non Organic'];
 
 function AllergyPopup({ onClose }) {
   const [showAllergens, setShowAllergens] = useState(false);
