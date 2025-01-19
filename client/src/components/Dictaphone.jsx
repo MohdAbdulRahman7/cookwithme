@@ -1,0 +1,46 @@
+// Boilerplate code from https://www.npmjs.com/package/react-speech-recognition?activeTab=readme#basic-example
+import React, { useEffect } from 'react';
+import 'regenerator-runtime/runtime';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
+import { sendPrompt } from '../helpers/apiUtils';
+import { textToSpeech } from '../helpers/textToSpeech';
+
+
+const Dictaphone = () => {
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+    } = useSpeechRecognition();
+
+    
+    if (!browserSupportsSpeechRecognition) {
+        return <span>Browser doesn't support speech recognition.</span>;
+    }
+
+    useEffect(() => {
+        if (transcript.toLowerCase().includes('send')) {
+            console.log(transcript); // Logic for sending to backend.
+            resetTranscript();
+            sendPrompt().then(response => {
+                console.log('Response from backend:', response);
+                textToSpeech(response);
+            }).catch(error => {
+                console.error('Error sending prompt:', error);
+            });
+        }
+    }, [transcript]);
+
+    return (
+        <div>
+            <p>Microphone: {listening ? 'on' : 'off'}</p>
+            <button onClick={() => SpeechRecognition.startListening({ continuous: true })}>Start</button>
+            <button onClick={SpeechRecognition.stopListening}>Stop</button>
+            <p>{transcript}</p>
+        </div>
+    );
+};
+
+export default Dictaphone;
