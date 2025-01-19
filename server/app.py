@@ -1,12 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify, session
 import json
 import openai
 from openai import OpenAI
+import os
 
 from config import GPT_API_KEY
 
 app = Flask(__name__)
-
+app.secret_key = os.urandom(24)  # This generates a random 24-byte string
 openai.api_key = GPT_API_KEY
 
 # Default Router
@@ -44,7 +45,7 @@ def chat():
             model="gpt-4o-mini",
             messages=session["messages"]
         )
-        response_message = completion.choices[0].message["content"]
+        response_message = completion.choices[0].message.content
 
         # Add GPT's response to the convo
         session["messages"].append({"role": "assistant", "content": response_message})

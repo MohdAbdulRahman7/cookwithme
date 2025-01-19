@@ -3,9 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask App</title>
+    <title>Cook With me</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Welcome to Flask!</h1>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl font-bold mb-6">COOK WITH ME</h1>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+            <h2 class="text-2xl font-semibold mb-4">Text Generation (Chat)</h2>
+            <form id="chat-form">
+                <textarea id="user-input" class="w-full p-4 border border-gray-300 rounded-lg mb-4" rows="4" placeholder="Enter your query..."></textarea>
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg">Generate Text</button>
+            </form>
+            <div id="chat-response" class="mt-4 text-lg font-medium"></div>
+        </div>
+
+        <!-- Image Input and Response -->
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4">Image Generation</h2>
+            <form id="image-form">
+                <input type="text" id="image-prompt" class="w-full p-4 border border-gray-300 rounded-lg mb-4" placeholder="Enter image prompt...">
+                <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-lg">Generate Image</button>
+            </form>
+            <div id="image-response" class="mt-4"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('chat-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const userInput = document.getElementById('user-input').value;
+            const responseDiv = document.getElementById('chat-response');
+
+            try {
+                const res = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: userInput })
+                });
+
+                const data = await res.json();
+                if (data.response) {
+                    responseDiv.innerHTML = `<strong>Response:</strong> ${data.response}`;
+                } else {
+                    responseDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
+                }
+            } catch (err) {
+                responseDiv.innerHTML = `<strong>Error:</strong> ${err.message}`;
+            }
+        });
+
+        document.getElementById('image-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const imagePrompt = document.getElementById('image-prompt').value;
+            const responseDiv = document.getElementById('image-response');
+
+            try {
+                const res = await fetch('/generate-image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: imagePrompt })
+                });
+
+                const data = await res.json();
+                if (data.image_url) {
+                    responseDiv.innerHTML = `<strong>Generated Image:</strong><br><img src="${data.image_url}" alt="Generated Image" class="mt-4 max-w-full h-auto">`;
+                } else {
+                    responseDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
+                }
+            } catch (err) {
+                responseDiv.innerHTML = `<strong>Error:</strong> ${err.message}`;
+            }
+        });
+    </script>
 </body>
 </html>
