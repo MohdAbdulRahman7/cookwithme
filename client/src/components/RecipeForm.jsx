@@ -57,6 +57,46 @@ function RecipeForm() {
         resetTranscript();
     };
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            console.log(`Key pressed: ${event.key}`);
+            let copy = manual;
+            if (copy.trim().length <= 4) {
+                console.log("Input is too short to send.");
+                return;
+            }
+            handleReset();
+            sendPrompt(copy).then(response => {
+                console.log('Response from backend:', response);
+                textToSpeech(response.response);
+                setRes(response.response);
+                if (response.flag === "alternate"){
+                    let tempList = [...list];
+                    tempList.pop();
+                    setList([...tempList, response.response]);
+                    setImg("");
+                }
+                else if(response.flag === "image"){
+                    setList([response.response]);
+                    setImg(response["image_url"]);
+                }
+                else{
+                    setList([response.response]);
+                    setImg("");
+                }
+            }).catch(error => {
+                console.error('Error sending prompt:', error);
+            });
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('keypress', handleKeyPress);
+        return () => {
+            window.removeEventListener('keypress', handleKeyPress);
+        };
+    }, [manual]);
+
     const queryIdeas = (meal) => {
         setPressed(false);
         let query = "Give me ideas for " + meal;
