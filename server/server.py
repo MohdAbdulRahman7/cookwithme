@@ -6,6 +6,7 @@ from flask_cors import CORS
 from config import GPT_API_KEY
 
 from mockGPT import choose_response, choose_specific_response
+import re
 
 class Server:
     def __init__(self):
@@ -98,6 +99,10 @@ class Server:
     
     def handle_response(self, response):
         response.replace("'", "\"")
+        def wrap_numbered_list(text):
+            return re.sub(r'(\d+\.\s)', r'"\1', text)
+
+        response = wrap_numbered_list(response)
         response_json = json.loads(response)
         response_type = response_json["response_type"]
         print("response type:", response_type)
@@ -111,13 +116,20 @@ class Server:
             return self.handle_ingredients(data)
         elif response_type == "steps":
             return self.handle_steps(data)
+        elif response_type == "general":
+            return self.handle_general(data)
         else:
             print("Here")
             return jsonify({"response": "Invalid response type"}), 400
 
+    def handle_general(self, data):
+        value = data.get("general", "I'm not sure what you mean by that.")
+        return jsonify({"response": value}), 200
+
     def handle_alternative(self, data):
         value = data.get("alternative", list(data.values())[0])
-        return jsonify({"response": value}), 200
+        self.last_seen_ingredient = value
+        return jsonify({"response": value, "flag": "alternate"}), 200
     
     def handle_ideas(self, data):
         self.general_list = []

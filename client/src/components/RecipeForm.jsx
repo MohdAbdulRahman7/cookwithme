@@ -65,7 +65,14 @@ function RecipeForm() {
                 console.log('Response from backend:', response);
                 textToSpeech(response.response);
                 setRes(response.response);
-                setList([response.response]);
+                if (response.flag === "alternate"){
+                    let tempList = list;
+                    tempList.pop();
+                    setList([tempList, response.response]);
+                }
+                else{
+                    setList([response.response]);
+                }
             }).catch(error => {
                 console.error('Error sending prompt:', error);
             });
