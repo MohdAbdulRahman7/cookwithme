@@ -5,6 +5,7 @@ import { TourProvider, useTour } from '@reactour/tour';
 import { steps } from '../components/steps';
 import { sendPrompt, getNext } from '../helpers/apiUtils';
 import { textToSpeech } from '../helpers/textToSpeech';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 import { 
   Button, 
   TextField, 
@@ -197,6 +198,7 @@ return (
                               }}
                             >
                               Need ideas for meals?
+                              <RestaurantIcon sx={{ mr: 1 }} />
                             </Button>
                           )}
 

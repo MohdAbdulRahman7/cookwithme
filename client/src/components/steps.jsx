@@ -5,7 +5,7 @@ export const steps = [
     },
     {
       selector: '.tedAI', 
-      content: 'Press me to get started!',
+      content: 'Press me for a hands-free experience!',
     },
     {
       selector: '.recipe-form',
