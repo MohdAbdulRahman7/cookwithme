@@ -112,3 +112,55 @@ label {
 .vibrate {
   animation: vibrate 0.5s infinite;
 }
+
+
+/* Box styling */
+.side-window-container {
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Header */
+.side-window-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* List styling */
+.side-window-list {
+  margin-bottom: 16px;
+}
+
+.side-window-item {
+  margin-bottom: 8px;
+  color: #4a4a4a;
+}
+
+/* Button Styling */
+.next-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.next-button:hover {
+  background-color: #2563eb;
+}
+
+.next-icon {
+  font-size: 24px;
+}
