@@ -1,7 +1,12 @@
 import axios from 'axios';
-let dietary_needs = {"1": "no nuts", "2":"vegan"};
+let dietary_needs = {};
 
-export const sendPrompt = async (prompt) => {
+export const updateDietaryNeeds = (newDietaryNeeds) => {
+    dietary_needs = { ...dietary_needs, ...newDietaryNeeds }; // Merge old and new values
+    // console.log('Updated dietary needs:', dietary_needs); 
+  };
+
+export const sendPrompt = async (prompt, dietary_needs) => {
     try {
         const preferences = `These are my dietary needs: ${JSON.stringify(dietary_needs)}`;
         const response = await axios.post('http://localhost:5000/api/prompt', { prompt: prompt + ' ' + preferences });
