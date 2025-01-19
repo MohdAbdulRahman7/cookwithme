@@ -146,7 +146,7 @@ return (
           />
         </Paper>
       </Box>
-      {res.length > 0 && <SideWindow props={res} />}
+      {res.length > 0 && <SideWindow props={res} setRes={setRes} />}
     </Box>
 );
 }
