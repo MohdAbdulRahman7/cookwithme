@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 import { getNext } from '../helpers/apiUtils';
 import { textToSpeech } from '../helpers/textToSpeech';
-const SideWindow = ({ setRes, list }) => { 
+const SideWindow = ({ setRes, list, img }) => { 
 
 
     return (
         <div>
             <h1>Side Window</h1>
-            <ul>
+            {img && <img src={img} alt="Img" />}
+            {list.length > 0 && <ul>
                 {list.map((item, index) => (
                     <li key={index}>{item}</li>
                 ))}
-            </ul>
+            </ul>}
             <button onClick={() => getNext().then(response => {
                             console.log('Response from backend:', response);
                             textToSpeech(response.response);

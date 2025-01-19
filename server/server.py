@@ -73,7 +73,7 @@ class Server:
                 )
                 # Return the URL of the generated image
                 image_url = response.data[0].url
-                return jsonify({"image_url": image_url}), 200
+                return jsonify({"image_url": image_url, "flag": "image"}), 200
             except Exception as e:
                 return jsonify({"error": str(e)}), 500
 
