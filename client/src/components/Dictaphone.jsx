@@ -23,10 +23,11 @@ const Dictaphone = () => {
     useEffect(() => {
         if (transcript.toLowerCase().includes('send')) {
             console.log(transcript); // Logic for sending to backend.
+            let copy = transcript;
             resetTranscript();
-            sendPrompt().then(response => {
+            sendPrompt(copy).then(response => {
                 console.log('Response from backend:', response);
-                textToSpeech(response);
+                textToSpeech(response.message);
             }).catch(error => {
                 console.error('Error sending prompt:', error);
             });
@@ -38,6 +39,7 @@ const Dictaphone = () => {
             <p>Microphone: {listening ? 'on' : 'off'}</p>
             <button onClick={() => SpeechRecognition.startListening({ continuous: true })}>Start</button>
             <button onClick={SpeechRecognition.stopListening}>Stop</button>
+            <button onClick={() => sendPrompt("Test message")}>Send</button>
             <p>{transcript}</p>
         </div>
     );
