@@ -11,6 +11,11 @@ CORS(app)
 app.secret_key = os.urandom(24)  # This generates a random 24-byte string
 openai.api_key = GPT_API_KEY
 
+dict = {
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "value3"
+}
 
 # Default Router
 @app.route("/")
@@ -23,6 +28,14 @@ def load_prompt():
     return prompts["recipe_prompt"]
 
 smart_prompt = load_prompt()
+
+# GET API -- Text
+@app.route("/api/next", methods=["GET"])
+def next_prompt():
+    val = str(list(dict.keys())[0] + " " + list(dict.values())[0]) if len(dict) > 0 else "No more values"
+    dict.pop(list(dict.keys())[0], None)
+    print("Returning value: ", val)
+    return jsonify({"response": val}), 200
 
 # POST API -- Text - Image
 @app.route("/api/prompt", methods=["POST"])

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
-import { sendPrompt } from '../helpers/apiUtils';
+import { sendPrompt, getNext } from '../helpers/apiUtils';
 import { textToSpeech } from '../helpers/textToSpeech';
 
 
@@ -21,6 +21,16 @@ const Dictaphone = () => {
     }
 
     useEffect(() => {
+        if(transcript.toLowerCase().includes('next')) {
+            console.log(transcript);
+            resetTranscript();
+            getNext().then(response => {
+                console.log('Response from backend:', response);
+                textToSpeech(response.response);
+            }).catch(error => {
+                console.error('Error getting next:', error);
+            });
+        }
         if (transcript.toLowerCase().includes('send')) {
             console.log(transcript); // Logic for sending to backend.
             let copy = transcript;
@@ -40,6 +50,12 @@ const Dictaphone = () => {
             <button onClick={() => SpeechRecognition.startListening({ continuous: true })}>Start</button>
             <button onClick={SpeechRecognition.stopListening}>Stop</button>
             <button onClick={() => sendPrompt("Test message")}>Send</button>
+            <button onClick={() => getNext().then(response => {
+                console.log('Response from backend:', response);
+                textToSpeech(response.response);
+            }).catch(error => {
+                console.error('Error getting next:', error);
+            })}>Next</button>
             <p>{transcript}</p>
         </div>
     );
