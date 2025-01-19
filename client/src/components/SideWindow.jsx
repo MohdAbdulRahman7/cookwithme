@@ -29,16 +29,16 @@
 import React from 'react';
 import { getNext } from '../helpers/apiUtils';
 import { textToSpeech } from '../helpers/textToSpeech';
-import { FaArrowRight } from 'react-icons/fa'; // To use the Next icon
-import '../App.css'; // Import custom CSS
+const SideWindow = ({ setRes, list, img }) => { 
 
-const SideWindow = ({ setRes, list }) => {
+
     return (
         <div className="side-window-container">
         <h1 className="side-window-header" style={{ textTransform: 'uppercase' }}>
             The Chef’s Corner
         </h1>            
-            <ul className="side-window-list">
+            {img && <img src={img} alt="Img" />}
+            {list.length > 0 && <ul className="side-window-list">
                 {list.map((item, index) => (
                     <li key={index} className="side-window-item">{item}</li>
                 ))}

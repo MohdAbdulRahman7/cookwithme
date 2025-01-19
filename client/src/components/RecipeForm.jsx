@@ -38,6 +38,8 @@ function RecipeForm() {
     const [res, setRes] = useState("");
     const [list, setList] = useState([]);
 
+    const [img, setImg] = useState("");
+
     useEffect(() => {
         if(transcript.toLowerCase().includes('next')) {
             console.log(transcript);
@@ -69,9 +71,15 @@ function RecipeForm() {
                     let tempList = [...list];
                     tempList.pop();
                     setList([...tempList, response.response]);
+                    setImg("");
+                }
+                else if(response.flag === "image"){
+                    setList([response.response]); // buggy line
+                    setImg(response["image_url"]);
                 }
                 else{
                     setList([response.response]);
+                    setImg("");
                 }
             }).catch(error => {
                 console.error('Error sending prompt:', error);
