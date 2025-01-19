@@ -42,3 +42,5 @@ CookWithUs was designed to make cooking accessible, engaging, and gamified. We a
 - Linking EC2 with the S3 instance.
 - Formatting a smart query to generate personalized results.
 - Integrating DALL-E for generating images.
+
+![](https://github.com/MohdAbdulRahman7/cookwithme/blob/master/client/src/assets/teddy.gif)
