@@ -101,6 +101,7 @@ class Server:
     def generate_image(self):
         data = request.json
         prompt = data.get("prompt")
+        prompt += " Make sure the image is of home cooked items, not fancy or raw food."
 
         if not prompt:
             return jsonify({"error": "Prompt is required"}), 400
