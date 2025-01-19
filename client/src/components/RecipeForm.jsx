@@ -49,6 +49,12 @@ function RecipeForm() {
                 console.error('Error getting next:', error);
             });
         }
+        if(transcript.toLowerCase().includes('stop')) {
+            console.log(transcript);
+            SpeechRecognition.stopListening();
+            resetTranscript();
+        }
+
         if (transcript.toLowerCase().includes('send')) {
             console.log(transcript); // Logic for sending to backend.
             let copy = transcript;
