@@ -158,7 +158,7 @@ return (
             <Grid2 container spacing={3} sx={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 {/* Recipe Form Section */}
                 <Grid2 item xs={12} md={6}>
-                    <Paper elevation={3} sx={{ p: 4, borderRadius: 4, height: '100%' }}>
+                    <Paper elevation={3} sx={{ p: 4, borderRadius: 4, height: '100%', marginTop: '6rem', backgroundColor: 'blue' }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4 }}>
                             <img
                                 src={gifImage}
