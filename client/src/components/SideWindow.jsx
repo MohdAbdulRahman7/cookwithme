@@ -15,7 +15,7 @@ const SideWindow = ({ setRes, list, img, setList }) => {
                 {img && <img src={img} alt="Img" />}
                 {list.length > 0 && <ul className="side-window-list">
                     {list.map((item, index) => (
-                        <li key={index} className="side-window-item">{item}</li>
+                        item && <li key={index} className="side-window-item">{item}</li>
                     ))}
                 </ul>}
                 <button
