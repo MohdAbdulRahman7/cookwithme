@@ -58,4 +58,4 @@ CookWithMe was designed to make cooking accessible, engaging, and gamified. We a
 - Thank you to nwPlus for hosting this amazing hackathon!
 - Thank you to the mentors, panellists, and sponsors for making this weekend possible!
 
-![](https://github.com/LouieTang/cookwithme/blob/master/client/src/assets/teddy.gif)
+![](https://github.com/MohdAbdulRahman7/cookwithme/blob/master/client/src/assets/teddy.gif)
