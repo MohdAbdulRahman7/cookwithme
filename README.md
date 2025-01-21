@@ -1,4 +1,4 @@
-### 🍳 CookWithUs
+### 🍳 CookWithMe
 
 #### 📊 FACTs:
 1. **81%** of Consumers Cook More Than Half of Meals at Home in North America ([source](https://www.qualityassurancemag.com/news/survey-reveals-81-percent-consumers-cook-more-than-half-of-meals-at-home/#:~:text=81%25%20of%20consumers%20cooking%20more%20than%20half%20their%20meals%20at%20home))
@@ -15,7 +15,7 @@ We are 4 international students/immigrants who:
 4. Obviously need help in the kitchen!
 5. Face food insecurity (a challenge for every immigrant!).
 
-CookWithUs was designed to make cooking accessible, engaging, and gamified. We allow users to follow recipes hands-free using voice commands via **tedAI** (we named it!). This lets users follow the steps without having to touch or scroll through the screen.
+CookWithMe was designed to make cooking accessible, engaging, and gamified. We allow users to follow recipes hands-free using voice commands via **tedAI** (we named it!). This lets users follow the steps without having to touch or scroll through the screen.
 
 #### Features:
 - **Hands-free cooking** experience.
@@ -33,7 +33,8 @@ CookWithUs was designed to make cooking accessible, engaging, and gamified. We a
 - Axios
 - REST
 - Amazon EC2
-- GPT-4O-mini
+- Amazon S3
+- GPT-4o-mini
 - Web Speech API
 
 #### Challenges Faced:
@@ -42,5 +43,19 @@ CookWithUs was designed to make cooking accessible, engaging, and gamified. We a
 - Linking EC2 with the S3 instance.
 - Formatting a smart query to generate personalized results.
 - Integrating DALL-E for generating images.
+
+#### What's Next:
+- Isolating user instances.
+- Increase functionality available on our UI.
+- (Final Goal) Transition into a portable and powerful mobile application that hosts the llm and processing locally on the user's own device.
+
+#### Learn More:
+- nwHacks 2025 Devpost Submission ([link](https://devpost.com/software/cook-with-me-8vmnwx))
+- YouTube Demo ([link](https://www.youtube.com/watch?v=2boanoYGW_o))
+- Filmora Wondershare Video Submission ([link](https://www.youtube.com/watch?v=jMkOCKVkcC8))
+
+#### Acknowledgements:
+- Thank you to nwPlus for hosting this amazing hackathon!
+- Thank you to the mentors, panellists, and sponsors for making this weekend possible!
 
 ![](https://github.com/MohdAbdulRahman7/cookwithme/blob/master/client/src/assets/teddy.gif)
